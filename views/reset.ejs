@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Rapids APIHub</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script>function getname(){
+  document.getElementsByName("email")[0].value = sessionStorage.getItem("email");
+  }
+  </script>
+  <style>
+  
+  .affix {
+      top: 20px;
+  }
+  </style>
+</head>
+<body onload='getname()'>
+<div class="container-fluid" style="background-color:#21A6F3;color:#fff;height:100px;">
+  <h1>Rapids SwaggerHub UI</h1>
+</div>
+<br>
+
+  <div class="col-md-10" class="comtainer-fluid">
+    
+    <form action="/reset" method="post">
+   
+    <input type="email" name="email" class="form-control"  readonly="readonly"/>
+
+    <p>Enter your new password</p>
+    <input type="password" class="form-control" name="password" pattern="(?=^.{6,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" title="The password must contain atleast one uppercase, lowercase and special/number character" placeholder="The password must contain atleast one uppercase, lowercase and special/number character" required/>
+    <br>
+    
+    <button type="submit" class="btn btn-block btn-primary btn-lg" onclick="getname()">Reset password</button>
+    </div>
+    <p>Go to <a href="/login">Login</a> page</p>
+    <p>or go to <a href="/">home</a></p>
+    </div>
+    </form>
+
+</body>
+</html>

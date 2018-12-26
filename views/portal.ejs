@@ -1,0 +1,281 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Rapids APIHub</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ng-dialog/1.4.0/css/ngDialog.css">
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.9.4/angular-material.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.cssc">
+  <link rel="stylesheet" href="https://rawgit.com/RamKar/apihub/master/style.css">
+  <link rel="stylesheet" href="https://rawgit.com/likeastore/ngDialog/master/css/ngDialog-theme-default.css">
+  <link rel="stylesheet" href="https://cdn.gitcdn.xyz/cdn/angular/bower-material/v1.0.0/angular-material.css">
+
+    <link data-require="angular-material@0.11.1" data-semver="0.11.1" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/0.11.1/angular-material.min.css" />
+    <script data-require="angular.js@1.4.x" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular.js" data-semver="1.4.7"></script>
+    <script data-require="angular-animate@*" data-semver="1.4.7" src="https://code.angularjs.org/1.4.7/angular-animate.js"></script>
+    <script data-require="angular-aria@*" data-semver="1.4.7" src="https://code.angularjs.org/1.4.7/angular-aria.js"></script>
+    <script data-require="angular-material@0.11.1" data-semver="0.11.1" src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/0.11.1/angular-material.js"></script>
+    <script data-semver="1.4.8" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.min.js"></script>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <script>function getname(){
+  document.getElementsByName("email")[0].value = sessionStorage.getItem("email");
+  }
+  </script>
+  <script>function getapi(){
+  document.getElementsByName("api")[0].value = true;
+  }
+  </script>
+  </script>
+  <script>function getproject(){
+  document.getElementsByName("api")[0].value = null;
+  }
+  </script>
+  <script>
+  angular.module('MyApp', ['ngAria', 'ngAnimate', 'ngMaterial']).controller('AppCtrl', function($scope, $mdDialog, $mdMedia) {
+  var self = this;
+  this.status = '  ';
+  this.customFullscreen = $mdMedia('xs') || $mdMedia('sm');
+
+  this.hide = function() {
+    $mdDialog.hide();
+  };
+
+  
+  this.answer = function(answer) {
+    $mdDialog.hide(answer);
+  };
+
+  this.showAlert = function(ev) {
+    // Appending dialog to document.body to cover sidenav in docs app
+    // Modal dialogs should fully cover application
+    // to prevent interaction outside of dialog
+    $mdDialog.show(
+      $mdDialog.alert()
+        .parent(angular.element(document.querySelector('#popupContainer')))
+        .clickOutsideToClose(true)
+        .title('This is an alert title')
+        .textContent('You can specify some description text in here.')
+        .ariaLabel('Alert Dialog Demo')
+        .ok('Got it!')
+        .targetEvent(ev)
+    );
+  };
+
+  this.showDialogProject= function(ev) {
+    var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'))  && $scope.customFullscreen;
+
+    $mdDialog.show({
+      controller: function () {
+        return self;
+      },
+      controllerAs: 'ctrl',
+      templateUrl: 'dialogContent.tmpl.html',
+      parent: angular.element(document.body),
+      targetEvent: ev,
+      clickOutsideToClose:true,
+      fullscreen: useFullScreen
+    });
+
+  };
+
+  this.showDialogApi = function(ev) {
+    $mdDialog.show({
+      controller: function () {
+        return self;
+      },
+      controllerAs: 'ctrl',
+      templateUrl: 'dialog1.tmpl.html',
+      parent: angular.element(document.body),
+      targetEvent: ev,
+      clickOutsideToClose:true
+    });
+  };
+});
+
+  </script>
+  
+  <style>
+  
+  .affix {
+      top: 20px;
+  }
+  </style>
+</head>
+<body ng-app="MyApp">
+
+<div class="container-fluid" style="background-color:#21A6F3;color:#fff;height:100px;">
+  <h1>Rapids SwaggerHub UI</h1>
+</div>
+<br>
+<div class="col-md-8 col-md-offset-2">
+  <p class="lead">You have logged into Rapids API hub <strong><%= user.local.firstName %></strong> !!</p>
+</div>
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <form action="" class="search-form">
+        <div class="form-group has-feedback">
+          <label for="search" class="sr-only">Search for API's</label>
+          <input type="text" class="form-control" name="search" id="search" placeholder="search for API's">
+            <span class="glyphicon glyphicon-search form-control-feedback"></span>
+        </div>
+      </form>
+    </div>
+</div>
+<nav class="col-md-2">
+      <ul class="nav nav-pills nav-stacked" data-spy="affix" data-offset-top="20">
+      <% if (message.length > 0) { %>
+           <div class="alert alert-danger"><%= message %></div>
+        <% } %>
+        <li>
+
+
+<div ng-controller="AppCtrl as ctrl" class="md-padding dialogdemoBasicUsage" id="popupContainer" ng-cloak="" ng-app="MyApp">
+  
+
+  <div class="dialog-demo-content" layout="row" layout-wrap="" layout-margin="">
+   
+    <md-button class="md-primary md-raised" ng-click="ctrl.showDialogProject($event)" flex="100" flex-gt-md="auto">
+      New Project
+    </md-button>
+    <md-button class="md-primary md-raised" ng-click="ctrl.showDialogApi($event)" flex="100" flex-gt-md="auto">
+      New API
+    </md-button>
+    
+  </div>
+  
+
+<script type="text/ng-template" id="dialogContent.tmpl.html"><md-dialog aria-label="New Project"  ng-cloak>
+  <form action="/portal" method="post" >
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <md-button class="md-raised md-primary" aria-label="Create a new project" ng-click="ctrl.hide()">
+          <md-icon class="fa fa-times fa-2x"></md-icon>
+        </md-button>
+      <h2 flex="flex">Create a Project</h2>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+	<div class="md-dialog-content">
+        
+        
+        <div class="form-group">
+            <label>Name of the project<span style="color:red;">*</span></label>
+            <input type="text" class="form-control" name="name" required>
+        </div>
+        <div class="form-group">
+            <label>Select API</label>
+            <input type="text" class="form-control" name="apiName">
+        </div>
+                   
+        <input type="hidden" name="email" class="form-control"  readonly="readonly"/>
+
+        <input type="hidden" name="api" class="form-control" value="null"  readonly="readonly"/>
+        
+        <div class="form-group">
+            <label>State<span style="color:red;">*</span></label>
+            <select name="state">
+                <option value="unpublished">Unpublished</option>
+                <option value="published">Published</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Visibility<span style="color:red;">*</span></label>
+            <select name="visibility">
+                <option value="public">Public</option>
+                <option value="private">Private</option>
+            </select>
+            
+        </div>
+        <div class="form-group">
+            <span class="text-muted"><em><span style="color:red;">*</span> Indicates required field</em></span>
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg" onclick="getname()">Create</button>
+    
+	 </div>
+      </md-dialog-content>
+    
+  </form>
+</md-dialog>
+</script>
+
+
+<script type="text/ng-template" id="dialog1.tmpl.html"><md-dialog aria-label="Create a new API">
+  <form action="/portal" method="post" >
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <md-button class="md-raised md-primary" aria-label="Create a new API" ng-click="ctrl.hide()">
+          <md-icon class="fa fa-times fa-2x"></md-icon>
+        </md-button>
+      <h2 flex="flex">Create an API</h2>
+      </div>
+    </md-toolbar>
+	
+	
+	
+    <md-dialog-content>
+	<div class="md-dialog-content">
+        
+        
+        <div class="form-group">
+            <label>Name of the API<span style="color:red;">*</span></label>
+            <input type="text" class="form-control" name="name" required>
+        </div>
+        
+                   
+        <input type="hidden" name="email" class="form-control"  readonly="readonly"/>
+
+        <input type="hidden" name="api" class="form-control" value="true"  readonly="readonly"/>
+        
+        <div class="form-group">
+            <label>State<span style="color:red;">*</span></label>
+            <select name="state">
+                <option value="unpublished">Unpublished</option>
+                <option value="published">Published</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Visibility<span style="color:red;">*</span></label>
+            <select name="visibility">
+                <option value="public">Public</option>
+                <option value="private">Private</option>
+            </select>
+            
+        </div>
+        <div class="form-group">
+            <span class="text-muted"><em><span style="color:red;">*</span> Indicates required field</em></span>
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg" onclick="getname()">Create</button>
+    
+	 </div>
+      </md-dialog-content>
+    
+  </form>
+</md-dialog>
+</script>
+</div>
+
+</li>
+        <li style="padding-left: 12px;"><a href ="/admin">Admin</a></li>
+        <li style="padding-left: 12px;"><a href="#Archive">Archive</a></li>
+        <li style="padding-left: 12px;"><a href="#dashboard">Dashboard</a></li>
+        <li style="padding-left: 12px;"><a href="/profile">Profile</a></li>
+        <ul class="nav nav-pills nav-stacked" data-spy="affix" data-offset-top="200">
+         <li><a href="/logout" button type="submit" class="btn btn-primary">Logout</button></a></li>
+        </ul>
+      </ul>
+    </nav>
+  </div>
+</div>
+
+</body>
+</html>
